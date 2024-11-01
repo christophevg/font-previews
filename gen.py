@@ -11,6 +11,9 @@ import json
 import sys
 
 FOLDER = sys.argv[1]
+BACKGROUND = None
+if len(sys.argv) > 2:
+  BACKGROUND = sys.argv[2]
 
 try:
   with open("pruned.json") as fp:
@@ -47,8 +50,9 @@ def generate_preview(fontfile):
       left, top, width, height = 0, 0, 1440, 87
       with Image(width=width, height=height) as canvas:
         with Drawing() as context:
-          context.fill_color = "white"
-          context.rectangle(left=left, top=top, width=width, height=height)
+          if BACKGROUND:
+            context.fill_color = BACKGROUND
+            context.rectangle(left=left, top=top, width=width, height=height)
 
           context.font = fontfile
           context.font_size = 60
